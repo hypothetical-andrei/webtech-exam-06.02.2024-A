@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A simple app</title>
+    <script>
+        window.onload = () => {
+            let loadBtn = document.getElementById('loadBtn')
+            let rowsTbl = document.getElementById('rowsTbl')
+            let selectionTxt = document.getElementById('selectionTxt')
+            let selection = document.getElementById('selection')
+
+            loadBtn.onclick = () => {
+                loadOne(selectionTxt.value)
+            }
+
+            const loadOne = async (id) => {
+                // TODO
+            }
+
+            const loadAll = async () =>{
+                try{
+                    let response = await fetch('/employees')
+                    let data = await response.json()
+                    let rows = data.map((e) => `
+                        <tr>
+                            <td>
+                                ${e.id}
+                            </td>
+                            <td>
+                                ${e.name}
+                            </td>
+                            <td>
+                                ${e.job}
+                            </td>
+                        </tr>
+                    `)
+                    rowsTbl.innerHTML = rows.join('')
+                }
+                catch(err){
+                    console.warn(err)
+                }
+            }
+
+            loadAll()
+        }
+    </script>
+</head>
+<body>
+    <h2>A simple app</h2>
+    <input type="text" id="selectionTxt" />
+    <!-- TODO -->
+    <table id="rowsTbl"></table>
+    <h3>Selection</h3>
+    <div id="selection"></div>
+</body>
+</html>
